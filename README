@@ -1,0 +1,168 @@
+                                                      E-COMMERCE & CUSTOMER ANALYTICS
+                                            PostgreSQL + Power BI | Professional Project Documentation
+1. Project Overview
+An end-to-end E-Commerce & Customer Analytics project using PostgreSQL and Power BI.
+The project transforms transactional data into business insights covering sales, customers, products, payments, order status and geographic performance.
+
+2. Business Objectives
+•	Measure revenue and order performance.
+•	Understand customer purchasing behavior.
+•	Identify repeat and high-value customers.
+•	Perform RFM analysis and customer segmentation.
+•	Identify top products and categories.
+•	Monitor cancellations and returns.
+•	Compare payment methods and cities.
+•	Build interactive, executive-ready Power BI dashboards.
+
+3. Technology Stack
+•	PostgreSQL — data storage, cleaning and SQL analysis.
+•	Power BI — dashboards, visualization and DAX.
+•	Excel/CSV — source data and data inspection.
+•	GitHub — portfolio and version control.
+
+4. Dataset
+|-----------------|--------------------------------------------|--------------------------- | 
+|Table	          |          Purpose	                         |      KeyField              |
+|-----------------|--------------------------------------------|----------------------------|
+|customers	      |      Customer master information   	       |  customer_id               |
+|orders	          |    Order transactions and status	         |  order_id                  |
+|order_items	    |      Products, quantity and price per order|	 order_id / product_id    |
+|products	        |    Product and category information        |	  product_id              |
+|payments         |    	Payment information	                   |    order_id                |
+---------------------------------------------------------------------------------------------
+•	Orders: 50,000 records.
+•	Customers table: 30,000 rows and 10,000 distinct customer IDs.
+•	Customers with orders/order-items in joined analysis: 9,932.
+•	Total revenue across all order statuses: ₹4,676,040,548.55.
+•	Delivered: 39,081; Shipped: 4,925; Cancelled: 2,978; Returned: 3,016.
+•	Order dates initially required order_date::date for date calculations.
+
+5. Data Cleaning & Quality Checks
+•	NULL customer IDs and important fields.
+•	Duplicate customer IDs.
+•	Order-status distribution.
+•	Invalid or future dates.
+•	Quantity <= 0.
+•	Unit price <= 0.
+•	Orphan foreign keys.
+•	Column data types using information_schema.
+
+Modeling note: the customers table contains duplicate customer_id values. For a production Power BI model, a one-row-per-customer dimension is recommended.
+
+6. Business Questions / SQL Analysis
+
+Analysis	                                                                                    Purpose
+Month-over-Month Revenue Growth                                       Compare monthly revenue using window functions.
+Top 10 Products by Quantity Sold                                      Rank products using SUM(quantity).
+Top 10 Products by Revenue                                            Rank products using quantity × unit_price.
+Category Performance                                                  Compare revenue by category.
+Top Customers	                                                        Rank customers by order count.
+Repeated Customers                                                    Identify customers with more than one order.
+Customer Segmentation	                                                Classify customers as Low, Medium or High by revenue.
+RFM Analysis	                                                        Calculate Recency, Frequency, Monetary and RFM scores.
+Cancellation Analysis	                                                Calculate cancelled orders and cancellation rate.
+Return Rate	                                                          Calculate returned orders and return rate.
+Payment Method Analysis	                                              Compare orders, revenue and revenue contribution.
+Geographic Analysis                                                  	Compare customers, orders and revenue by city.
+Inactive Customers	                                                  Find customers with no purchase in 90+ days.
+Data Cleaning	                                                        Validate data quality.
+Project KPIs	                                                        Create core business metrics.
+
+7. RFM Analysis
+RFM means:
+•	Recency — days since the customer's latest purchase; fewer days is better.
+•	Frequency — number of orders; more orders is better.
+•	Monetary — total customer spending; higher spending is better.
+
+Each dimension was scored from 1 to 5 using NTILE(5). RFM Score = Recency Score + Frequency Score + Monetary Score.
+Portfolio segmentation used: ≥12 High Value; 8–11 Medium Value; <8 Low Value.
+
+8. Core KPI Results
+KPI	                           Value	                                        Meaning
+Total Orders                	50,000	                                 All order statuses
+Delivered Orders	            39,081	                                 78.16% of orders
+Shipped Orders	              4,925	                                    9.85% of orders
+Cancelled Orders	            2,978                                    	5.96% cancellation rate
+Returned Orders             	3,016	                                    6.03% return rate
+Total Revenue	             ₹4,676,040,548.55	                          All statuses
+Distinct                   Customers with Orders 9,932	                Joined analysis
+AOV                       	≈ ₹93.52K                                   	Power BI display
+
+
+9. Top 10 Products by Revenue
+Rank  	Product ID    	Product           	       Revenue (₹)
+1	        979	      Smart Watch 0979	            31,389,721.69
+2         165	      Smart Watch 0165	            28,965,508.88
+3        	707	      Tablet 0707	                  28,049,216.84
+4	        278	      Bluetooth Speaker 0278      	27,869,089.18
+5     	  731	      Wireless Earbuds 0731	        27,420,153.91
+6	        802	      Tablet 0802	                  27,178,612.50
+7	        625	      Wireless Earbuds 0625	        26,796,653.81
+8	        479	      Monitor 0479	                26,550,584.65
+9	        468	      Bluetooth Speaker 0468       	26,048,191.32
+10	      46	      Smart Watch 0046	            26,003,594.39
+
+   
+10. Power BI Dashboard
+
+Page 1 — Executive Sales Dashboard
+•	KPI Cards: Total Customers, Total Orders, Total Revenue, AOV, Total Quantity, Cancellation Rate, Return Rate.
+•	Monthly Revenue Trend.
+•	Revenue by Category.
+•	Orders by Order Status.
+•	Top 10 Products by Revenue.
+•	Slicers: Order Date, Category, Order Status and City.
+
+Page 2 — Customer Analytics
+•	KPI Cards: Total Customers, Repeat Customers, Average Revenue per Customer.
+•	Top 10 Customers by Orders.
+•	Revenue-based Customer Segmentation.
+•	RFM Customer Segments.
+•	Customer Frequency vs Monetary scatter analysis.
+•	Customers Not Purchased in 90+ Days.
+
+Page 3 — Product & Geographic Analysis
+•	Revenue by City.
+•	Sold Quantity by Product.
+•	Top 10 Products by Quantity Sold.
+•	Category-level quantity analysis.
+
+11. Materialized Views
+•	Monthly Revenue.
+•	Customer Sales Summary.
+•	Product Performance.
+•	City Performance Dashboard.
+•	Category Performance Dashboard.
+
+12. Important Interpretation Notes
+•	₹4.68B is revenue calculated across all order statuses; clearly label all-status versus delivered-only metrics.
+•	The customers source table has duplicate IDs, so customer-level Power BI metrics should use distinct customer IDs or a customer dimension.
+•	SUM(quantity) measures units; COUNT measures rows/orders and is not equivalent to quantity.
+•	Revenue-based customer segmentation and RFM segmentation are separate analyses.
+•	Power BI may display 9,932 as 10K when display units are set to Thousands.
+
+13. GitHub Repository Structure
+Repository name: 'ecommerce-customer-analytics'
+•	data/ — source CSV files.
+•ecommerce_customer_analytics.sql — Complete PostgreSQL SQL analysis covering data cleaning, sales analysis, customer analysis, RFM analysis, and KPIs.
+•	ECommerce_Customer_Analytics.pbix — Interactive Power BI report containing three dashboard pages.
+•	README — Project documentation, objectives, tools, analysis, KPIs, and key insights.
+
+14. Professional Resume / LinkedIn Description
+Built an end-to-end E-Commerce & Customer Analytics project using PostgreSQL and Power BI. Performed data cleaning, SQL-based sales analysis, customer segmentation, RFM analysis, repeat-customer analysis, product and category performance analysis, cancellation and return analysis, payment-method analysis, and geographic analysis. Developed interactive Power BI dashboards to monitor revenue, orders, AOV, customer behavior, product performance, and key business KPIs.
+
+15. Portfolio Checklist
+•	PostgreSQL analysis completed.
+•	RFM analysis completed.
+•	Core KPIs completed.
+•	Three Power BI dashboard pages completed.
+•	Dashboard screenshots ready.
+•	GitHub repository can be public.
+•	Resume and LinkedIn project description ready.
+
+
+
+
+
+
+
