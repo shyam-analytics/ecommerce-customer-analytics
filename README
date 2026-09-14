@@ -81,12 +81,12 @@ Portfolio segmentation used: ≥12 High Value; 8–11 Medium Value; <8 Low Value
 KPI	                           Value	                                        Meaning
 Total Orders                	50,000	                                 All order statuses
 Delivered Orders	            39,081	                                 78.16% of orders
-Shipped Orders	              4,925	                                    9.85% of orders
-Cancelled Orders	            2,978                                    	5.96% cancellation rate
-Returned Orders             	3,016	                                    6.03% return rate
-Total Revenue	             ₹4,676,040,548.55	                          All statuses
-Distinct                   Customers with Orders 9,932	                Joined analysis
-AOV                       	≈ ₹93.52K                                   	Power BI display
+Shipped Orders	              4,925	                                   9.85% of orders
+Cancelled Orders	            2,978                                    5.96% cancellation rate
+Returned Orders             	3,016	                                   6.03% return rate
+Total Revenue	             ₹4,676,040,548.55	                         All statuses
+Distinct                   Customers with Orders 9,932	               Joined analysis
+AOV                       	≈ ₹93.52K                                  Power BI display
 
 
 9. Top 10 Products by Revenue
